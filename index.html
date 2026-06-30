@@ -842,7 +842,22 @@ function showUnlockOverlay(purchaseUrl) {
 }
 
 // トライアル中バナー表示
-banner.style.cursor = 'pointer';
+// トライアル中バナー表示
+function showTrialBanner() {
+  const daysLeft = getTrialDaysLeft();
+  if (isUnlocked()) return;
+  const accentColor = (typeof PWA_THEME_COLOR !== 'undefined') ? PWA_THEME_COLOR : '#0284c7';
+  const banner = document.createElement('div');
+  banner.id = 'trial-banner';
+  banner.style = `
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: white; color: ${accentColor}; text-align: center;
+    padding: 10px 16px; font-family: 'Noto Sans JP', sans-serif;
+    font-size: 12px; font-weight: 700; z-index: 9998;
+    border-top: 3px solid ${accentColor};
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+    cursor: pointer;
+  `;
   banner.textContent = daysLeft > 0
     ? `🎁 無料体験 残り${daysLeft}日（タップで購入）`
     : `🔒 無料体験が終了しました（タップで購入）`;
